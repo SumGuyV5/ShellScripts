@@ -86,7 +86,7 @@ sshd_dw() {
   if [ $SSHD = true ]; then
     echo "Download sshd.sh script."
     echo ""
-    download "https://raw.githubusercontent.com/SumGuyV5/ShellSripts/master/sshd.sh" sshd.sh
+    download "https://raw.githubusercontent.com/SumGuyV5/ShellScripts/master/sshd.sh" sshd.sh
   fi
 }
 
@@ -110,7 +110,7 @@ sudo_dw() {
   if [ $SUDOSETUP = true ]; then
     echo "Download sudo_setup.sh script."
     echo ""
-    download "https://raw.githubusercontent.com/SumGuyV5/ShellSripts/master/sudo_setup.sh" sudo_setup.sh
+    download "https://raw.githubusercontent.com/SumGuyV5/ShellScripts/master/sudo_setup.sh" sudo_setup.sh
   fi
 }
 
