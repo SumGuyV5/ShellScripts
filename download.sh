@@ -70,11 +70,13 @@ help() {
 }
 
 download() {
-  DOWNLOAD=$@
+  DOWNLOAD=$1
+  NAME=$2
   if ([ -f /usr/bin/curl ] || [ -f /usr/local/bin/curl ])
   then
-    curl -o $DOWNLOAD.sh http://www.richardallenonline.com/sites/default/files/$DOWNLOAD.txt
-    chmod 755 $DOWNLOAD.sh
+    curl -O $DOWNLOAD
+    #curl -o $DOWNLOAD.sh http://www.richardallenonline.com/sites/default/files/$DOWNLOAD.txt
+    chmod 755 $NAME
   else
     echo "curl not installed!"
   fi
@@ -84,7 +86,7 @@ sshd_dw() {
   if [ $SSHD = true ]; then
     echo "Download sshd.sh script."
     echo ""
-    download sshd
+    download "https://github.com/SumGuyV5/ShellSripts/blob/master/sshd.sh" sshd.sh
   fi
 }
 
@@ -92,7 +94,7 @@ arch_dw() {
   if [ $ARCHSETUP = true ]; then
     echo "Download arch_setup.sh script."
     echo ""
-    download arch_setup
+    download "https://github.com/SumGuyV5/ArchScripts/blob/master/arch_setup.sh" arch_setup.sh
   fi
 }
 
@@ -100,7 +102,7 @@ freebsd_dw() {
   if [ $FREEBSDSETUP = true ]; then
     echo "Download freebsd_setup.sh script."
     echo ""
-    download freebsd_setup
+    download "https://github.com/SumGuyV5/FreeBSDScripts/blob/master/freebsd_setup.sh" freebsd_setup.sh
   fi
 }
 
@@ -108,7 +110,7 @@ sudo_dw() {
   if [ $SUDOSETUP = true ]; then
     echo "Download sudo_setup.sh script."
     echo ""
-    download sudo_setup
+    download "https://github.com/SumGuyV5/ShellSripts/blob/master/sudo_setup.sh" sudo_setup.sh
   fi
 }
 
