@@ -119,12 +119,12 @@ sudo_dw() {
 }
 
 bash_dw() {
-  if [ $SUDOSETUP = true ]; then
+  if [ $BASHSETUP = true ]; then
     echo "Download bash_setup.sh script."
     echo ""
     download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/bash_setup.sh" bash_setup.sh
   fi
-  }
+}
 
 question() {
   HEADER=$1
