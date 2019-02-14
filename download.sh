@@ -16,9 +16,11 @@ FREEBSDSETUP=false
 
 SUDOSETUP=false
 
+BASHSETUP=false
+
 OPT=false
 
-while getopts Safs option
+while getopts SafsB option
 do
   case "${option}"
   in    
@@ -26,6 +28,7 @@ do
   a) ARCHSETUP=true;;
   f) FREEBSDSETUP=true;;
   s) SUDOSETUP=true;;
+  B) BASHSETUP=true;;
   esac
   OPT=true
 done
@@ -67,6 +70,7 @@ help() {
   echo "-a download arch_setup.sh script."
   echo "-f download freebsd_setup.sh script."
   echo "-s download sudo_setup.sh script."
+  echo "-B download bash_setup.sh script."
 }
 
 download() {
@@ -114,6 +118,14 @@ sudo_dw() {
   fi
 }
 
+bash_dw() {
+  if [ $SUDOSETUP = true ]; then
+    echo "Download bash_setup.sh script."
+    echo ""
+    download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/bash_setup.sh" bash_setup.sh
+  fi
+  }
+
 question() {
   HEADER=$1
   QUESTION=$2
@@ -152,6 +164,11 @@ ask_questions() {
   if [ "$?" = 1 ]; then
     SUDOSETUP=true
   fi
+  
+  question "bash Setup." "Would you like to download bash_setup.sh script"
+  if [ "$?" = 1 ]; then
+    BASHSETUP=true
+  fi
 }
 
 execute_selection() {
@@ -164,6 +181,8 @@ execute_selection() {
   freebsd_dw
   
   sudo_dw
+  
+  bash_dw
 }
 
 #------------------------------------------
