@@ -1,13 +1,4 @@
 #!/bin/sh
-#if [ `whoami` != root ]; then 
- # echo "Please run as root."
- # exit 1
-#fi
-#if [ "$1" = "" ] || [ "$1" = "-h" ]; then 
-#  echo "Please run as root and pass the user name."
-#  exit 1
-#fi
-
 SSHD=false
 
 ARCHSETUP=false
@@ -20,7 +11,9 @@ BASHSETUP=false
 
 OPT=false
 
-while getopts SafsB option
+HELP=false
+
+while getopts SafsBh option
 do
   case "${option}"
   in    
@@ -29,6 +22,7 @@ do
   f) FREEBSDSETUP=true;;
   s) SUDOSETUP=true;;
   B) BASHSETUP=true;;
+  h) HELP=true;;
   esac
   OPT=true
 done
@@ -71,18 +65,46 @@ help() {
   echo "-f download freebsd_setup.sh script."
   echo "-s download sudo_setup.sh script."
   echo "-B download bash_setup.sh script."
+  echo "-h this Help Text."
+  echo ""
+  echo "IE: ./download.sh -S -f -s -B"
+}
+
+fetch_dw() {
+  DOWNLOAD=$1
+  if [ -f /usr/bin/fetch ]; then
+    echo "fetch $DOWNLOAD"
+    fetch $DOWNLOAD   
+  else
+    echo "fetch not installed!"
+  fi
+}
+
+curl_dw() {
+  DOWNLOAD=$1
+  if ([ -f /usr/bin/curl ] || [ -f /usr/local/bin/curl ]); then
+    echo "curl -O $DOWNLOAD"
+    curl -O $DOWNLOAD
+    #curl -o $DOWNLOAD.sh http://www.richardallenonline.com/sites/default/files/$DOWNLOAD.txt
+  else
+    echo "curl not installed!"
+  fi
 }
 
 download() {
   DOWNLOAD=$1
   NAME=$2
-  if ([ -f /usr/bin/curl ] || [ -f /usr/local/bin/curl ])
-  then
-    curl -O $DOWNLOAD
-    #curl -o $DOWNLOAD.sh http://www.richardallenonline.com/sites/default/files/$DOWNLOAD.txt
+  
+  if [ "$(uname)" == 'Linux' ]; then
+    curl_dw $DOWNLOAD
+  elif [ "$(uname)" == 'FreeBSD' ]; then
+    fetch_dw $DOWNLOAD
+  fi
+  
+  if [ -f $NAME ]; then
     chmod 755 $NAME
   else
-    echo "curl not installed!"
+    echo "File not download!?"
   fi
 }
 
