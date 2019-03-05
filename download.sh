@@ -9,6 +9,9 @@ SUDOSETUP=false
 
 BASHSETUP=false
 
+DJANGOSETUP=false
+DRUPALSETUP=false
+
 OPT=false
 
 HELP=false
@@ -22,6 +25,8 @@ do
   f) FREEBSDSETUP=true;;
   s) SUDOSETUP=true;;
   B) BASHSETUP=true;;
+  j) DJANGOSETUP=true;;
+  d) DRUPALSETUP=true;;
   h) HELP=true;;
   esac
   OPT=true
@@ -65,9 +70,11 @@ help() {
   echo "-f download freebsd_setup.sh script."
   echo "-s download sudo_setup.sh script."
   echo "-B download bash_setup.sh script."
+  echo "-j download django_setup.sh script."
+  echo "-d download drupal_setup.sh script."
   echo "-h this Help Text."
   echo ""
-  echo "IE: ./download.sh -S -f -s -B"
+  echo "IE: ./download.sh -S -f -s -B -j -d"
 }
 
 fetch_dw() {
@@ -148,6 +155,22 @@ bash_dw() {
   fi
 }
 
+django_dw() {
+  if [ $DJANGOSETUP = true ]; then
+    echo "Download FreeBSD django_setup.sh script."
+    echo ""
+    download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/django_setup.sh" django_setup.sh
+  fi
+}
+
+drupal_dw() {
+  if [ $DJANGOSETUP = true ]; then
+    echo "Download FreeBSD django_setup.sh script."
+    echo ""
+    download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/drupal_setup.sh" drupal_setup.sh
+  fi
+}
+
 question() {
   HEADER=$1
   QUESTION=$2
@@ -191,6 +214,16 @@ ask_questions() {
   if [ "$?" = 1 ]; then
     BASHSETUP=true
   fi
+  
+  question "django Setup." "Would you like to download FreeBSD django_setup.sh script"
+  if [ "$?" = 1 ]; then
+    DJANGOSETUP=true
+  fi
+  
+  question "drupal Setup." "Would you like to download FreeBSD drupal_setup.sh script"
+  if [ "$?" = 1 ]; then
+    DRUPALSETUP=true
+  fi
 }
 
 execute_selection() {
@@ -205,6 +238,10 @@ execute_selection() {
   sudo_dw
   
   bash_dw
+  
+  django_dw
+  
+  drupal_dw
 }
 
 #------------------------------------------
