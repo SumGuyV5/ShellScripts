@@ -102,9 +102,9 @@ download() {
   DOWNLOAD=$1
   NAME=$2
   
-  if [ "$(uname)" == 'Linux' ]; then
+  if [ "$(uname)" = 'Linux' ]; then
     curl_dw $DOWNLOAD
-  elif [ "$(uname)" == 'FreeBSD' ]; then
+  elif [ "$(uname)" = 'FreeBSD' ]; then
     fetch_dw $DOWNLOAD
   fi
   

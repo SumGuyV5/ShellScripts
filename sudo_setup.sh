@@ -22,10 +22,10 @@ else
 fi
 
 if [ -n "$SUDO_USER" ]; then
-  if [ "$(uname)" == 'Linux' ]; then
+  if [ "$(uname)" = 'Linux' ]; then
     [ $(getent group sudo) ] || groupadd sudo
     usermod -a -G sudo $SUDO_USER
-  elif [ "$(uname)" == 'FreeBSD' ]; then
+  elif [ "$(uname)" = 'FreeBSD' ]; then
       [ $(getent group sudo) ] || pw groupadd sudo
       pw groupmod sudo -m $SUDO_USER
   fi  
