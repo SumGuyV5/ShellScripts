@@ -32,8 +32,6 @@ do
   OPT=true
 done
 
-#header() works with Normal FreeBSD and ArchLinux but not with FreeNAS.
-#Why?
 header() {
   HEADER=$1
   STRLENGTH=$(echo -n $HEADER | wc -m)
@@ -43,15 +41,15 @@ header() {
   echo $max
   for i in $(seq 1 $max)
   do
-    DISPLAY+="-"    
+    DISPLAY="${DISPLAY}-"    
   done
-  DISPLAY+=" "$HEADER" "
+  DISPLAY="${DISPLAY} "$HEADER" "
   
   STRLENGTH=$(echo -n $DISPLAY | wc -m)
   max=`expr 65 - $STRLENGTH`
   for i in $(seq 1 $max)
   do
-    DISPLAY+="-"
+    DISPLAY="${DISPLAY}-"
   done
     
   clear
@@ -98,12 +96,25 @@ curl_dw() {
   fi
 }
 
+wget_dw() {
+  DOWNLOAD=$1
+  if ([ -f /usr/bin/wget ] || [ -f /usr/local/bin/wget ]); then
+    echo "wget $DOWNLOAD"
+    wget $DOWNLOAD
+  else
+    echo "wget not installed!"
+  fi
+}
+
 download() {
   DOWNLOAD=$1
   NAME=$2
   
   if [ "$(uname)" = 'Linux' ]; then
     curl_dw $DOWNLOAD
+    if [ ! -f $NAME ]; then
+      wget_dw $DOWNLOAD
+    fi
   elif [ "$(uname)" = 'FreeBSD' ]; then
     fetch_dw $DOWNLOAD
   fi
