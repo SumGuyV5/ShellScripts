@@ -12,11 +12,13 @@ BASHSETUP=false
 DJANGOSETUP=false
 DRUPALSETUP=false
 
+FREEPBXSETUP=false
+
 OPT=false
 
 HELP=false
 
-while getopts SafsBh option
+while getopts SafsBjdph option
 do
   case "${option}"
   in    
@@ -27,6 +29,7 @@ do
   B) BASHSETUP=true;;
   j) DJANGOSETUP=true;;
   d) DRUPALSETUP=true;;
+  p) FREEPBXSETUP=true;;
   h) HELP=true;;
   esac
   OPT=true
@@ -68,8 +71,9 @@ help() {
   echo "-f download freebsd_setup.sh script."
   echo "-s download sudo_setup.sh script."
   echo "-B download bash_setup.sh script."
-  echo "-j download django_setup.sh script."
-  echo "-d download drupal_setup.sh script."
+  echo "-j download django_setup.sh script. FreeBSD only."
+  echo "-d download drupal_setup.sh script. FreeBSD only."
+  echo "-p download freepbx_setup.sh script. FreeBSD only."
   echo "-h this Help Text."
   echo ""
   echo "IE: ./download.sh -S -f -s -B -j -d"
@@ -182,6 +186,14 @@ drupal_dw() {
   fi
 }
 
+freepbx_dw() {
+  if [ $FREEPBXSETUP = true ]; then
+    echo "Download FreeBSD freepbx_setup.sh script."
+    echo ""
+    download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/freepbx_setup.sh" drupal_setup.sh
+  fi
+}
+
 question() {
   HEADER=$1
   QUESTION=$2
@@ -235,6 +247,11 @@ ask_questions() {
   if [ "$?" = 1 ]; then
     DRUPALSETUP=true
   fi
+  
+  question "freepbx Setup." "Would you like to download FreeBSD freepbx_setup.sh script"
+  if [ "$?" = 1]; then
+    FREEPBXSETUP=true
+  fi
 }
 
 execute_selection() {
@@ -253,6 +270,8 @@ execute_selection() {
   django_dw
   
   drupal_dw
+  
+  freepbx_dw
 }
 
 #------------------------------------------
