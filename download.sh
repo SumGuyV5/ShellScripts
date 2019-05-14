@@ -13,6 +13,7 @@ DJANGOSETUP=false
 DRUPALSETUP=false
 
 FREEPBXSETUP=false
+FUSIONPBXSETUP=false
 
 OPT=false
 
@@ -30,6 +31,7 @@ do
   j) DJANGOSETUP=true;;
   d) DRUPALSETUP=true;;
   p) FREEPBXSETUP=true;;
+  P) FUSIONPBXSETUP=true;;
   h) HELP=true;;
   esac
   OPT=true
@@ -74,6 +76,7 @@ help() {
   echo "-j download django_setup.sh script. FreeBSD only."
   echo "-d download drupal_setup.sh script. FreeBSD only."
   echo "-p download freepbx_setup.sh script. FreeBSD only."
+  echo "-P download fusionpbx_setup.sh script. FreeBSD only."
   echo "-h this Help Text."
   echo ""
   echo "IE: ./download.sh -S -f -s -B -j -d"
@@ -190,7 +193,15 @@ freepbx_dw() {
   if [ $FREEPBXSETUP = true ]; then
     echo "Download FreeBSD freepbx_setup.sh script."
     echo ""
-    download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/freepbx_setup.sh" drupal_setup.sh
+    download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/freepbx_setup.sh" freepbx_setup.sh
+  fi
+}
+
+fusionpbx_dw() {
+  if [ $FREEPBXSETUP = true ]; then
+    echo "Download FreeBSD fusionpbx_setup.sh script."
+    echo ""
+    download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/fusionpbx_setup.sh" fusionpbx_setup.sh
   fi
 }
 
@@ -252,6 +263,11 @@ ask_questions() {
   if [ "$?" = 1]; then
     FREEPBXSETUP=true
   fi
+  
+  question "fusionpbx Setup." "Would you like to download FreeBSD fusionpbx_setup.sh script"
+  if [ "$?" = 1]; then
+    FUSIONPBXSETUP=true
+  fi
 }
 
 execute_selection() {
@@ -272,6 +288,8 @@ execute_selection() {
   drupal_dw
   
   freepbx_dw
+  
+  fusionpbx_dw
 }
 
 #------------------------------------------
