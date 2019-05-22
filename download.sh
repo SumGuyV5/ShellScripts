@@ -19,7 +19,7 @@ OPT=false
 
 HELP=false
 
-while getopts SafsBjdph option
+while getopts SafsBjdpPh option
 do
   case "${option}"
   in    
@@ -183,7 +183,7 @@ django_dw() {
 
 drupal_dw() {
   if [ $DJANGOSETUP = true ]; then
-    echo "Download FreeBSD django_setup.sh script."
+    echo "Download FreeBSD drupal_setup.sh script."
     echo ""
     download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/drupal_setup.sh" drupal_setup.sh
   fi
@@ -260,12 +260,12 @@ ask_questions() {
   fi
   
   question "freepbx Setup." "Would you like to download FreeBSD freepbx_setup.sh script"
-  if [ "$?" = 1]; then
+  if [ "$?" = 1 ]; then
     FREEPBXSETUP=true
   fi
   
   question "fusionpbx Setup." "Would you like to download FreeBSD fusionpbx_setup.sh script"
-  if [ "$?" = 1]; then
+  if [ "$?" = 1 ]; then
     FUSIONPBXSETUP=true
   fi
 }
