@@ -198,7 +198,7 @@ freepbx_dw() {
 }
 
 fusionpbx_dw() {
-  if [ $FREEPBXSETUP = true ]; then
+  if [ $FUSIONPBXSETUP = true ]; then
     echo "Download FreeBSD fusionpbx_setup.sh script."
     echo ""
     download "https://raw.githubusercontent.com/SumGuyV5/FreeBSDScripts/master/fusionpbx_setup.sh" fusionpbx_setup.sh
