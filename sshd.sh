@@ -48,5 +48,6 @@ else
 
   echo 'sshd_enable="YES"' >> /etc/rc.conf
  
+  service sshd start 
   service sshd restart
 fi
