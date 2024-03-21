@@ -19,7 +19,8 @@ USER_HOME=$(eval echo "~$1")
  
 mkdir -p $USER_HOME/.ssh
  
-PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAlR3m2xi7yTf65p9AwQNaBSQ4CtGQy5OvIBgFrqy8RkHTGE+iG/uIMJMkjR0t+kxfTcddCLwdEjKvjPFOD9r5w4OADFb/Mypz1xfMUmNUlmY5L/ks69676BA19L214jkI/qDNv0Nb7RSjm/WS3b10YESd5rI8vypeKQMa8lYPZos= rsa-key-20081215"
+#new ssh key
+PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAgbVRKRx4y5bK7KiEKheElWEI/z086f6b3yOEHSI5RGTBJcxXxQ2Vkv2g/zrCK2BnPOGEF8QlcjAsZtD6HygKKQK2JNuTRdj/JrlziN3d7K2rDtQLunnYKyS5JjPhmoTFDiDgE639ITSJiMMLPNkrX2YYU90hTxqaIGoSLJeSsRTALXK5vtflCU/Q7pbdBSgpxtb85u7E0DxZQOSnl2cBz7iPuTcdyqjys1heIUGcJqig618Sd5N309EnZEObPovVPIBmeNqvHquTGTmEaWXsrO8uRodLrHAXKjpyHN2c1I/Hh0MGZqrA28FhGwQPwZvIhq2h0JBUAtxqplR8osAJFQ== rsa-key-20240321"
 cat > $USER_HOME/.ssh/authorized_keys << EOF
 $PUBLIC_KEY
 EOF
@@ -34,10 +35,6 @@ sed -i.bak '/# *PermitRootLogin no/s/^# *//gi' /etc/ssh/sshd_config
  
 sed -i.bak 's/PasswordAuthentication yes/PasswordAuthentication no/gi' /etc/ssh/sshd_config
 sed -i.bak '/# *PasswordAuthentication no/s/^# *//gi' /etc/ssh/sshd_config
-
-cat >> /etc/ssh/sshd_config  << EOF
-PubkeyAcceptedAlgorithms=+ssh-rsa
-EOF
 
 #if [ -f /usr/bin/systemctl ]
 if ([ -f /usr/bin/systemctl ] || [ -f /bin/systemctl ])
