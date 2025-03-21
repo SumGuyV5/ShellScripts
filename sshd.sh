@@ -36,6 +36,10 @@ sed -i.bak '/# *PermitRootLogin no/s/^# *//gi' /etc/ssh/sshd_config
 sed -i.bak 's/PasswordAuthentication yes/PasswordAuthentication no/gi' /etc/ssh/sshd_config
 sed -i.bak '/# *PasswordAuthentication no/s/^# *//gi' /etc/ssh/sshd_config
 
+cat >> /etc/ssh/sshd_config  << EOF
+PubkeyAcceptedAlgorithms=+ssh-rsa
+EOF
+
 #if [ -f /usr/bin/systemctl ]
 if ([ -f /usr/bin/systemctl ] || [ -f /bin/systemctl ])
 then
